@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRaster", "OpenRaster\OpenRaster.csproj", "{8202F4A3-5556-424A-86BD-F52F1E5C4CD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenRaster.Tests", "OpenRaster.Tests\OpenRaster.Tests.csproj", "{475B80A2-EA65-4059-A679-3D4A83316482}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8202F4A3-5556-424A-86BD-F52F1E5C4CD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8202F4A3-5556-424A-86BD-F52F1E5C4CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8202F4A3-5556-424A-86BD-F52F1E5C4CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8202F4A3-5556-424A-86BD-F52F1E5C4CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{475B80A2-EA65-4059-A679-3D4A83316482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475B80A2-EA65-4059-A679-3D4A83316482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475B80A2-EA65-4059-A679-3D4A83316482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475B80A2-EA65-4059-A679-3D4A83316482}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D8E18ADA-9620-4144-AA36-3ED4874658DB}
+	EndGlobalSection
+EndGlobal
