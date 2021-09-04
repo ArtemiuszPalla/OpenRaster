@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Navigators.Controls">
-      <HintPath>..\..\..\..\Monogame\Game\Libs\Windows\Navigators\Navigators.Forms\bin\Release\Navigators.Controls.dll</HintPath>
+      <HintPath>..\ThirdParty.Libs\Navigators.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Navigators.Forms">
-      <HintPath>..\..\..\..\Monogame\Game\Libs\Windows\Navigators\Navigators.Forms\bin\Release\Navigators.Forms.dll</HintPath>
+      <HintPath>..\ThirdParty.Libs\Navigators.Forms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
