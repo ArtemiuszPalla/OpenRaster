@@ -33,7 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Navigators.Controls">
+    <Reference Include="Navigators.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty.Libs\Navigators.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Navigators.Forms">
@@ -95,6 +96,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Image-icon-16.png" />
     <EmbeddedResource Include="Resources\Image-icon-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Image-icon-48.png" />
+    <EmbeddedResource Include="Resources\Image-icon-64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
