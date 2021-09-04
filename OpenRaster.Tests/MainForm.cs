@@ -80,7 +80,7 @@ namespace OpenRaster.Tests
             Navigators.Forms.SaveImageFileDialog saveFileDialog1 = new Navigators.Forms.SaveImageFileDialog();
             saveFileDialog1.FileDialogUnknownIcon += FileDialogUnknownIcon;
             saveFileDialog1.ImageFileDialogUnknownFile += openFileDialog1_ImageFileDialogUnknownFile;
-            saveFileDialog1.FileName = "unnamed.ora";
+            saveFileDialog1.FileName = "Unnamed.ora";
             saveFileDialog1.Filter = "Open Raster|*.ora";
             saveFileDialog1.Title = "Save as graphic";
             saveFileDialog1.ShowDialog();
