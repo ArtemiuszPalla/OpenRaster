@@ -42,6 +42,7 @@ namespace OpenRaster
 {
     public class Content
     {
+        string Check;
         /// <summary>
         /// Get layers list.
         /// </summary>
@@ -51,7 +52,7 @@ namespace OpenRaster
             set;
         }
         /// <summary>
-        /// Constructor.
+        /// Constructor of image content.
         /// </summary>
         public Content()
         {
