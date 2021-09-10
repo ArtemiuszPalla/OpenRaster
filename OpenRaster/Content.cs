@@ -42,14 +42,26 @@ namespace OpenRaster
 {
     public class Content
     {
-
-        public List<Layer> Layers;
-
+        /// <summary>
+        /// Get layers list.
+        /// </summary>
+        public List<Layer> Layers
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Content()
         {
             Layers = new List<OpenRaster.Layer>();
         }
 
+        /// <summary>
+        /// Get open raster layer by name
+        /// </summary>
+        /// <param name="index">Layer name</param>
         public Layer GetLayer(string name)
         {
             Layer ret = null;
@@ -65,11 +77,14 @@ namespace OpenRaster
             }
             return ret;
         }
-
+        /// <summary>
+        /// Get open raster layer by index
+        /// </summary>
+        /// <param name="index">Layer index</param>
         public Layer GetLayer(int index)
         {
             if (Layers == null) return null;
-            
+
             if (index >= 0 && index < Layers.Count)
             {
                 return Layers[index];
@@ -95,7 +110,10 @@ namespace OpenRaster
 
             return defaultValue;
         }
-
+        /// <summary>
+        /// Load Open Raster image.
+        /// </summary>
+        /// <param name="filename">Name of the file</param>
         public void Load(string fileName)
         {
 
@@ -122,7 +140,7 @@ namespace OpenRaster
 
             int LayerCount = layerElements.Count - 1;
 
-            for (int i = LayerCount; i >= 0; i--) 
+            for (int i = LayerCount; i >= 0; i--)
             {
                 XmlElement layerElement = (XmlElement)layerElements[i];
                 int x = int.Parse(GetAttribute(layerElement, "x", "0"));
@@ -152,7 +170,10 @@ namespace OpenRaster
 
         }
 
-
+        /// <summary>
+        ///  Load Open Raster image thumbnail.
+        /// </summary>
+        /// <param name="filename">Name of the file</param>
         public Image LoadThumbnail(string fileName)
         {
             Image ret = null;
@@ -173,12 +194,14 @@ namespace OpenRaster
             return ret;
         }
 
-
+        /// <summary>
+        /// Get the image with merged layers.
+        /// </summary>
         public System.Drawing.Image Image
         {
             get
             {
-                
+
                 System.Drawing.Bitmap newlayer = null;
                 System.Drawing.Graphics pe = null;
                 foreach (Layer layer in Layers)
@@ -197,6 +220,9 @@ namespace OpenRaster
         }
 
 
+        /// <summary>
+        /// Get thumbnail image with merged layers.
+        /// </summary>
         public System.Drawing.Image Thumbnail
         {
             get
@@ -220,7 +246,7 @@ namespace OpenRaster
             }
         }
         private const int ThumbMaxSize = 256;
-        private Size GetThumbDimensions(int width, int height) // OraFormat.cs
+        private Size GetThumbDimensions(int width, int height)
         {
             if (width <= ThumbMaxSize && height <= ThumbMaxSize)
                 return new Size(width, height);
@@ -231,14 +257,17 @@ namespace OpenRaster
                 return new Size((int)((double)width / height * ThumbMaxSize), ThumbMaxSize);
         }
 
-
+        /// <summary>
+        /// Save Open Raster file.
+        /// </summary>
+        /// <param name="filename">Name of the file</param>
         public void Save(string fileName)
         {
             ZipOutputStream stream = new ZipOutputStream(new FileStream(fileName, FileMode.Create));
             stream.UseZip64 = UseZip64.Off;
             ZipEntry mimetype = new ZipEntry("mimetype");
             mimetype.CompressionMethod = CompressionMethod.Stored;
-            
+
             stream.PutNextEntry(mimetype);
 
             byte[] databytes = System.Text.Encoding.ASCII.GetBytes("image/openraster");
@@ -309,8 +338,8 @@ namespace OpenRaster
                 writer.WriteAttributeString("x", Layers[i].X.ToString());
                 writer.WriteAttributeString("y", Layers[i].Y.ToString());
                 writer.WriteAttributeString("composite-op", "svg:src-over");
-                
-                
+
+
                 writer.WriteEndElement();
             }
 
@@ -333,47 +362,47 @@ namespace OpenRaster
             Bitmap Image = null;
 
             Bitmap Layer = null;
-            
-                using (Bitmap BMP = new Bitmap(stream))
+
+            using (Bitmap BMP = new Bitmap(stream))
+            {
+                if (Layer == null)
                 {
-                    if (Layer == null)
-                    {
-                        Layer = new Bitmap(BMP.Width, BMP.Height);
-                    }
-                    BitmapData LayerData = Layer.LockBits(new Rectangle(x, y, BMP.Width, BMP.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-                    BitmapData BMPData = BMP.LockBits(new Rectangle(0, 0, BMP.Width, BMP.Height), ImageLockMode.ReadOnly, BMP.PixelFormat);
+                    Layer = new Bitmap(BMP.Width, BMP.Height);
+                }
+                BitmapData LayerData = Layer.LockBits(new Rectangle(x, y, BMP.Width, BMP.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                BitmapData BMPData = BMP.LockBits(new Rectangle(0, 0, BMP.Width, BMP.Height), ImageLockMode.ReadOnly, BMP.PixelFormat);
 
-                    int bpp = Bitmap.GetPixelFormatSize(BMP.PixelFormat) / 8;
+                int bpp = Bitmap.GetPixelFormatSize(BMP.PixelFormat) / 8;
 
-                    for (int ya = 0; ya < BMP.Height; ya++)
+                for (int ya = 0; ya < BMP.Height; ya++)
+                {
+                    for (int xa = 0; xa < BMP.Width; xa++)
                     {
-                        for (int xa = 0; xa < BMP.Width; xa++)
+                        byte* dst = (byte*)LayerData.Scan0.ToPointer() + (ya * LayerData.Stride) + (xa * 4);
+                        byte* src = (byte*)BMPData.Scan0.ToPointer() + (ya * BMPData.Stride) + (xa * bpp);
+
+                        dst[0] = src[0]; // B
+                        dst[1] = src[1]; // G
+                        dst[2] = src[2]; // R
+
+                        if (bpp == 4)
                         {
-                            byte* dst = (byte*)LayerData.Scan0.ToPointer() + (ya * LayerData.Stride) + (xa * 4);
-                            byte* src = (byte*)BMPData.Scan0.ToPointer() + (ya * BMPData.Stride) + (xa * bpp);
-
-                            dst[0] = src[0]; // B
-                            dst[1] = src[1]; // G
-                            dst[2] = src[2]; // R
-
-                            if (bpp == 4)
-                            {
-                                dst[3] = src[3]; // A
-                            }
-                            else
-                            {
-                                dst[3] = 255;
-                            }
+                            dst[3] = src[3]; // A
+                        }
+                        else
+                        {
+                            dst[3] = 255;
                         }
                     }
-                    BMP.UnlockBits(BMPData);
-                    Layer.UnlockBits(LayerData);
                 }
-                if (Layer != null)
-                {
-                    Image = (Bitmap)Layer.Clone();
-                    Layer.Dispose();
-                }
+                BMP.UnlockBits(BMPData);
+                Layer.UnlockBits(LayerData);
+            }
+            if (Layer != null)
+            {
+                Image = (Bitmap)Layer.Clone();
+                Layer.Dispose();
+            }
             return Image;
         }
 
